@@ -11,7 +11,8 @@ class Admin
 {
     private const OPTION_GROUP = 'horoscope_settings_group';
     private const OPTION_NAME = 'horoscope_data';
-    
+    private const OPTION_SELECTED_SIGN = 'horoscope_selected_sign';
+
     /**
      * Constructor
      */
@@ -58,43 +59,62 @@ class Admin
     {
         // Get the saved horoscope data, defaulting 'selected_date' to today if not set
         $horoscope_data = get_option(self::OPTION_NAME, [
+            'selected_date' => date('Y-m-d'), // Default to today's date
+            'selected_sign' => \HoroscopePlugin\Shortcode::DEFAULT_SIGN,
             'yesterday' => '',
             'today' => '',
-            'tomorrow' => '',
-            'selected_date' => date('Y-m-d') // Default to today's date
+            'tomorrow' => ''
         ]);
-        
         ?>
-<div class="wrap">
-    <h1>Horoscope Settings</h1>
-    <form method="post" action="options.php">
-        <?php settings_fields(self::OPTION_GROUP); ?>
-        <h2>Edit Horoscope Data</h2>
-        <table class="form-table">
-            <tr>
-                <th scope="row">Date</th>
-                <td>
-                    <input type="date"
-                        name="<?php echo esc_attr(self::OPTION_NAME . '[selected_date]'); ?>"
-                        value="<?php echo esc_attr($horoscope_data['selected_date']); ?>">
-                </td>
-            </tr>
-            <?php foreach (['yesterday', 'today', 'tomorrow'] as $day): ?>
-            <tr>
-                <th scope="row">
-                    <?php echo esc_html(ucfirst($day)); ?></th>
-                <td>
-                    <textarea class="large-text"
-                        name="<?php echo esc_attr(self::OPTION_NAME . "[$day]"); ?>"
-                        rows="5"><?php echo esc_textarea($horoscope_data[$day]); ?></textarea>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php submit_button(); ?>
-    </form>
-</div>
-<?php
+        <div class="wrap">
+            <h1>Horoscope Settings</h1>
+            <form method="post" action="options.php">
+                <?php settings_fields(self::OPTION_GROUP); ?>
+                <h2>Edit Horoscope Data</h2>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">Zodiac Sign</th>
+                        <td>
+                            <?php 
+                            $signs = \HoroscopePlugin\Shortcode::SIGNS;
+                            $selected_sign = $horoscope_data['selected_sign'] ?? \HoroscopePlugin\Shortcode::DEFAULT_SIGN;
+                            ?>
+                            <select name="<?php echo esc_attr(self::OPTION_NAME . '[selected_sign]'); ?>"
+                                id="selected_sign">
+                                <?php foreach ($signs as $sign => $symbol): ?>
+                                <option value="<?php echo esc_attr($sign); ?>"
+                                    <?php selected($selected_sign, $sign); ?>>
+                                    <?php echo esc_html(ucfirst($sign)); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Date</th>
+                        <td>
+                            <input type="date"
+                                name="<?php echo esc_attr(self::OPTION_NAME . '[selected_date]'); ?>"
+                                value="<?php echo esc_attr($horoscope_data['selected_date']); ?>">
+                        </td>
+                    </tr>
+                    <?php foreach (['yesterday', 'today', 'tomorrow'] as $day): ?>
+                    <tr>
+                        <th scope="row">
+                            <?php echo esc_html(ucfirst($day)); ?></th>
+                        <td>
+                            <textarea class="large-text"
+                                name="<?php echo esc_attr(self::OPTION_NAME . "[$day]"); ?>"
+                                rows="5"><?php echo esc_textarea($horoscope_data[$day]); ?></textarea>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+                <?php submit_button(); ?>
+            </form>
+        </div>
+        <?php
     }
 
     /**
