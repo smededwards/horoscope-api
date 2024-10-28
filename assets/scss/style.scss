@@ -1,0 +1,79 @@
+$dark-bg: #1a1a1a; 
+$light-bg: #333; 
+$hover-color: #ffcc00; 
+$active-bg-color: #ffcc00; 
+$border-radius: 0; 
+$transition-speed: 0.3s; 
+$text-color: #1a1a1a; 
+
+.horoscope {
+    &__sign {
+        font-size: 2rem; 
+        margin-block: 1.5rem;
+        color: inherit; 
+        text-align: center;
+    }
+
+    &__title {
+        font-size: 1.5rem; 
+        font-weight: normal;
+        margin-block: 1.5rem;
+        color: inherit; 
+        text-align: center;
+    }
+
+    &__nav {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 1.5rem;
+        justify-content: center;
+
+        &-link {
+            appearance: none;
+            background-color: transparent; 
+            border: 2px solid $light-bg; 
+            color: inherit; 
+            cursor: pointer;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: $border-radius; 
+            transition: border-color $transition-speed, color $transition-speed, transform $transition-speed;
+
+            &:hover {
+                border-color: $hover-color; 
+                color: $dark-bg; 
+                transform: scale(1.05);
+            }
+
+            &--active {
+                background-color: $active-bg-color; 
+                color: $dark-bg; 
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &__date {
+        font-weight: normal;
+        font-size: 1.5rem;
+        margin-block: 1rem;
+        text-align: center;
+        color: inherit; 
+    }
+
+    &__days {
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition: opacity $transition-speed, height $transition-speed;
+
+        &--active {
+            height: auto;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity $transition-speed ease-in, height $transition-speed ease-in;
+        }
+    }
+}

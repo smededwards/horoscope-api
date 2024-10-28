@@ -1,0 +1,26 @@
+{
+  "name": "horoscope-api",
+  "description": "A plugin to fetch and display horoscope data.",
+  "author": "smededwards",
+  "version": "1.0.0",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smededwards/wp-horoscope-api.git"
+  },
+  "homepage": "https://github.com/smededwards/wp-horoscope-api#readme",
+  "bugs": {
+    "url": "https://github.com/smededwards/wp-horoscope-api/issues"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "@wordpress/scripts": "^30.3.0"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start"
+  }
+}

@@ -1,0 +1,10 @@
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore node.js dependencies and build directories
+node_modules/
+npm-debug.log*
+
+# Ignore build files
+build/
