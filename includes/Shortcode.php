@@ -138,7 +138,7 @@ class Shortcode
     {
         // Initialize the output with the default sign.
         $output = '<div class="horoscope">';
-        $selected_sign =$atts['sign'] ?? get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;
+        $selected_sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;
         $output .= sprintf('<h2 class="horoscope__sign">%s %s</h2>', self::SIGNS[strtolower($selected_sign)], ucfirst($selected_sign));
         $output .= '<div class="horoscope__content">';
         $output .= $this->renderNavigation();
