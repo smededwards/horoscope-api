@@ -1,7 +1,21 @@
+$signs-colors: (
+    "aries": #E63946, 
+    "taurus": #4CAF50, 
+    "gemini": #FFD700, 
+    "cancer": #C0C0C0, 
+    "leo": #8B4513, 
+    "virgo": #8B4513, 
+    "libra": #FF69B4, 
+    "scorpio": #000000, 
+    "sagittarius": #800080, 
+    "capricorn": #708090, 
+    "aquarius": #1E90FF, 
+    "pisces": #2E8B57
+);
+$active-bg-color: #1a1a1a;
 $dark-bg: #1a1a1a; 
 $light-bg: #333; 
-$hover-color: #ffcc00; 
-$active-bg-color: #ffcc00; 
+$hover-color: #1a1a1a; 
 $border-radius: 0; 
 $transition-speed: 0.3s; 
 $text-color: #1a1a1a; 
@@ -41,14 +55,12 @@ $text-color: #1a1a1a;
             transition: border-color $transition-speed, color $transition-speed, transform $transition-speed;
 
             &:hover {
-                border-color: $hover-color; 
-                color: $dark-bg; 
                 transform: scale(1.05);
             }
 
             &--active {
-                background-color: $active-bg-color; 
-                color: $dark-bg; 
+                background-color: $active-bg-color;
+                color: #fff;
                 transform: scale(1.1);
             }
         }
@@ -74,6 +86,22 @@ $text-color: #1a1a1a;
             opacity: 1;
             visibility: visible;
             transition: opacity $transition-speed ease-in, height $transition-speed ease-in;
+        }
+    }
+    &__sign {
+        $parent: &;
+        // loop through the $signs-colors map and create a css class for each sign, and attach color to sign-symbol
+        @each $sign, $color in $signs-colors {
+            &--#{$sign} {
+                #{$parent}-symbol {
+                    color: $color;
+                    text-shadow:
+                    1px 1px 0 #000,
+                    -1px 1px 0 #000,
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000;
+                }
+            }
         }
     }
 }

@@ -137,9 +137,9 @@ class Shortcode
     private function formatHoroscope(array $horoscope_data, array $dates, array $atts = []): string
     {
         // Initialize the output with the default sign.
-        $output = '<div class="horoscope">';
         $selected_sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;
-        $output .= sprintf('<h2 class="horoscope__sign">%s %s</h2>', self::SIGNS[strtolower($selected_sign)], ucfirst($selected_sign));
+        $output = '<div class="horoscope horoscope__sign--' . strtolower($selected_sign) . '">';
+        $output .= sprintf('<h2 class="horoscope__sign"><span class="horoscope__sign-symbol">%s</span> %s</h2>', self::SIGNS[strtolower($selected_sign)], ucfirst($selected_sign));
         $output .= '<div class="horoscope__content">';
         $output .= $this->renderNavigation();
 
