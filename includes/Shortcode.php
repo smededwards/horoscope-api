@@ -12,6 +12,20 @@ class Shortcode
 {
     public const DAYS = ['yesterday', 'today', 'tomorrow']; // Define days of interest as a constant to avoid repetition.
     public const DEFAULT_SIGN = 'Gemini'; // Default sign to display if not specified in the shortcode.
+    public const SIGNS = [
+        'aries' => '♈',
+        'taurus' => '♉',
+        'gemini' => '♊',
+        'cancer' => '♋',
+        'leo' => '♌',
+        'virgo' => '♍',
+        'libra' => '♎',
+        'scorpio' => '♏',
+        'sagittarius' => '♐',
+        'capricorn' => '♑',
+        'aquarius' => '♒',
+        'pisces' => '♓'
+    ]; // Define all zodiac signs as a constant array
 
     private HoroscopeAPI $api;
     private Cache $cache;
@@ -39,13 +53,13 @@ class Shortcode
         // Set default attributes for the shortcode.
         $atts = shortcode_atts(
             [
-                'sign' => self::DEFAULT_SIGN, // Default sign if not specified.
-                'date' => ''                  // Default to an empty string if no date is provided.
+                'sign' => '', // Default to an empty string if no sign is provided.
+                'date' => ''  // Default to an empty string if no date is provided.
             ],
             $atts
         );
 
-        $sign = strtolower($atts['sign']);
+        $sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;         // Use the provided sign or the selected sign from options.
         $main_date = !empty($atts['date']) ? $atts['date'] : get_option('horoscope_data')['selected_date'] ?? date('Y-m-d'); // Use provided date or the selected date from options.
 
         // Validate the provided date format (YYYY-MM-DD) and use today if invalid.
@@ -123,8 +137,9 @@ class Shortcode
     private function formatHoroscope(array $horoscope_data, array $dates, array $atts = []): string
     {
         // Initialize the output with the default sign.
-        $output = '<div class="horoscope">';
-        $output .= sprintf('<h2 class="horoscope__sign">%s</h2>', ucfirst($atts['sign']));
+        $selected_sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;
+        $output = '<div class="horoscope horoscope__sign--' . strtolower($selected_sign) . '">';
+        $output .= sprintf('<h2 class="horoscope__sign"><span class="horoscope__sign-symbol">%s</span> %s</h2>', self::SIGNS[strtolower($selected_sign)], ucfirst($selected_sign));
         $output .= '<div class="horoscope__content">';
         $output .= $this->renderNavigation();
 
