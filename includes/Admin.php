@@ -75,20 +75,17 @@ class Admin
                     <tr>
                         <th scope="row">Zodiac Sign</th>
                         <td>
-                            <?php 
-                            $signs = \HoroscopePlugin\Shortcode::SIGNS;
-                            $selected_sign = $horoscope_data['selected_sign'] ?? \HoroscopePlugin\Shortcode::DEFAULT_SIGN;
-                            ?>
-                            <select name="<?php echo esc_attr(self::OPTION_NAME . '[selected_sign]'); ?>"
-                                id="selected_sign">
-                                <?php foreach ($signs as $sign => $symbol): ?>
-                                <option value="<?php echo esc_attr($sign); ?>"
-                                    <?php selected($selected_sign, $sign); ?>>
-                                    <?php echo esc_html(ucfirst($sign)); ?>
-                                </option>
+                            <select name="<?php echo esc_attr(self::OPTION_NAME . '[selected_sign]'); ?>">
+                                <?php 
+                                    $selected_sign = !empty($horoscope_data['selected_sign']) ? $horoscope_data['selected_sign'] : \HoroscopePlugin\Shortcode::DEFAULT_SIGN;
+                                    $signs = \HoroscopePlugin\Shortcode::SIGNS;
+                                    foreach ($signs as $sign => $symbol):
+                                ?>
+                                    <option value="<?php echo esc_attr($sign); ?>" <?php selected($selected_sign, $sign); ?>>
+                                        <?php echo esc_html(ucfirst($sign)); ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
-
                         </td>
                     </tr>
                     <tr>
