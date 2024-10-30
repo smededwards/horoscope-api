@@ -73,9 +73,11 @@ class Admin
                 <h2>Edit Horoscope Data</h2>
                 <table class="form-table">
                     <tr>
-                        <th scope="row">Zodiac Sign</th>
+                        <th scope="row">
+                            <label for="selected_sign">Selected Sign</label>
+                        </th>
                         <td>
-                            <select name="<?php echo esc_attr(self::OPTION_NAME . '[selected_sign]'); ?>">
+                            <select name="<?php echo esc_attr(self::OPTION_NAME . '[selected_sign]'); ?>" id="selected_sign">
                                 <?php 
                                     $selected_sign = !empty($horoscope_data['selected_sign']) ? $horoscope_data['selected_sign'] : \HoroscopePlugin\Shortcode::DEFAULT_SIGN;
                                     $signs = \HoroscopePlugin\Shortcode::SIGNS;
@@ -89,19 +91,25 @@ class Admin
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Date</th>
+                        <th scope="row">
+                            <label for="selected_date">Selected Date</label>
+                        </th>
                         <td>
-                            <input type="date"
-                                name="<?php echo esc_attr(self::OPTION_NAME . '[selected_date]'); ?>"
-                                value="<?php echo esc_attr($horoscope_data['selected_date']); ?>">
+                            <input 
+                                type="date" 
+                                id="selected_date"
+                                name="<?php echo esc_attr(self::OPTION_NAME . '[selected_date]'); ?>" 
+                                value="<?php echo esc_attr($horoscope_data['selected_date']); ?>"
+                            >
                         </td>
                     </tr>
                     <?php foreach (['yesterday', 'today', 'tomorrow'] as $day): ?>
                     <tr>
                         <th scope="row">
-                            <?php echo esc_html(ucfirst($day)); ?></th>
+                            <label for="<?php echo esc_attr($day); ?>"><?php echo esc_html(ucfirst($day)); ?></label>
                         <td>
                             <textarea class="large-text"
+                                id="<?php echo esc_attr($day); ?>"
                                 name="<?php echo esc_attr(self::OPTION_NAME . "[$day]"); ?>"
                                 rows="5"><?php echo esc_textarea($horoscope_data[$day]); ?></textarea>
                         </td>
