@@ -15,6 +15,18 @@ class Cache
     private const DEFAULT_EXPIRATION = 86400; // Default expiration time in seconds (1 day).
 
     /**
+     * Generates a unique cache key based on sign and date.
+     *
+     * @param string $sign The zodiac sign.
+     * @param string $date The date.
+     * @return string A unique cache key.
+     */
+    public function generateCacheKey(string $sign, string $date): string
+    {
+        return 'horoscope_' . strtolower($sign) . '_' . $date;
+    }
+
+    /**
      * Sets a cache entry with a specified key and expiration time.
      *
      * @param string $key Unique identifier for the cache.
@@ -67,7 +79,7 @@ class Cache
     public function deleteCache(string $key): void
     {
         $this->validateCacheKey($key);
-        
+
         if (delete_transient($key)) {
             error_log("Cache deleted for key: $key");
         } else {

@@ -59,7 +59,7 @@ class Shortcode
             $atts
         );
 
-        $sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN;         // Use the provided sign or the selected sign from options.
+        $sign = !empty($atts['sign']) ? $atts['sign'] : get_option('horoscope_data')['selected_sign'] ?? self::DEFAULT_SIGN; // Use the provided sign or the selected sign from options.
         $main_date = !empty($atts['date']) ? $atts['date'] : get_option('horoscope_data')['selected_date'] ?? date('Y-m-d'); // Use provided date or the selected date from options.
 
         // Validate the provided date format (YYYY-MM-DD) and use today if invalid.
@@ -75,7 +75,7 @@ class Shortcode
         ];
 
         // Generate a cache key based on the sign and main date for storing or retrieving cached horoscope data.
-        $cache_key = 'horoscope_' . $sign . '_' . $main_date;
+        $cache_key = $this->cache->generateCacheKey($sign, $main_date);
         $horoscope_data = $this->cache->getCache($cache_key);
 
         // If no data in cache, fetch it from the API.
